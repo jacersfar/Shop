@@ -10,7 +10,7 @@ public class Cart {
 	public Cart(ArrayList<CartItem> productList) {
 		this.productList = productList;
 	}
-	public void addToCart(Product product, int quantity) {
+	public void addToCart(Product product, int quantity) throws InvalidValueException {
 		for (CartItem i: this.productList) {
 			if (i.getProduct().equals(product)) {
 				i.setQuantity(quantity + i.getQuantity());
@@ -23,7 +23,7 @@ public class Cart {
 	public void deleteFromCart(Product p) {
 		for (CartItem c: this.productList) {
 			if (c.getProduct().equals(p)) {
-				this.productList.remove(this.productList.indexOf(c));
+				this.productList.remove(c);
 				break;
 			}
 		}

@@ -3,23 +3,16 @@ package entities;
 import java.util.ArrayList;
 
 public class Client extends User {
-	private String name;
 	private Cart cart;
 	private ArrayList<Order> orders = new ArrayList<Order>();
-	public Client() {
-		super();
+	public Client(int id,String userName, String passWord, String name) {
+		super(id,userName, passWord, name);
+		this.cart = new Cart();
 	}
-	public Client(String userName, String passWord, String name, Cart cart, ArrayList<Order> orders) {
-		super(userName, passWord);
-		this.name = name;
-		this.cart = cart;
+	public Client(int id,String userName, String passWord, String name, ArrayList<Order> orders) {
+		super(id, userName, passWord, name);
+		this.cart = new Cart();
 		this.orders = orders;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 	public Cart getCart() {
 		return cart;
@@ -32,6 +25,27 @@ public class Client extends User {
 	}
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
+	}
+	public boolean addOrder(Order order) throws InvalidValueException {
+		if (order != null) {
+			this.orders.add(order);
+			return true;
+		} else {
+			throw new InvalidValueException();
+		}
+	}
+	public boolean deleteOrder(Order order) throws InvalidValueException {
+		if (order != null) {
+			for (Order o: this.orders) {
+				if (o.getId() == order.getId()) {
+					this.orders.remove(o);
+					return true;
+				}
+			}
+			return false;
+		} else {
+			throw new InvalidValueException();
+		}
 	}
 	public void displayOrders() {
 		for (Order order: this.orders) {
